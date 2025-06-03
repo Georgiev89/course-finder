@@ -5,45 +5,63 @@
   <title>Course Finder (CSV)</title>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
-  body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    background: #f7f7f7;
-  }
-  label {
-    font-weight: bold;
-    margin-right: 5px;
-  }
-  select {
-    margin: 10px;
-    font-size: 16px;
-    padding: 5px;
-  }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  }
-  th {
-    background-color: #e0dfdf;
-    padding: 12px 10px;
-    font-size: 16px;
-    text-align: left;
-    border-bottom: 2px solid #d3d3d3;
-  }
-  td {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    font-size: 15px;
-  }
-  tr:hover {
-    background-color: #f0f0f0;
-  }
-</style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+      color: #333;
+    }
 
+    h2 {
+      color: #d89c3f;
+    }
+
+    label {
+      font-weight: bold;
+      margin-right: 5px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    select {
+      margin: 10px 10px 20px 0;
+      font-size: 16px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #333;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    th {
+      background-color: #d89c3f;
+      color: #ffffff;
+      padding: 14px 12px;
+      font-size: 16px;
+      text-align: left;
+      border-bottom: 2px solid #c07f2f;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      font-size: 15px;
+    }
+
+    tr:hover {
+      background-color: #fff7eb;
+    }
+  </style>
 </head>
 <body>
   <h2>Course Finder (CSV Version)</h2>
@@ -121,17 +139,14 @@
         header: true,
         download: true,
         complete: function(results) {
-          const data = results.data.filter(row => row['University Name']); // remove blanks
-
+          const data = results.data.filter(row => row['University Name']);
           populateDropdown('universityFilter', data.map(r => r['University Name']));
           populateDropdown('qualificationFilter', data.map(r => r['Qualification Type']));
           populateDropdown('locationFilter', data.map(r => r['Campus Location']));
           populateDropdown('timingFilter', data.map(r => r['Class Timings']));
-
           ['universityFilter', 'qualificationFilter', 'locationFilter', 'timingFilter'].forEach(id => {
             document.getElementById(id).addEventListener('change', () => filterAndDisplay(data));
           });
-
           filterAndDisplay(data);
         }
       });
