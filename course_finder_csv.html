@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Course Finder (CSV)</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    select, table {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background: #e3e3e3;
+    }
+  </style>
+</head>
+<body>
+  <h2>Course Finder (CSV Version)</h2>
+
+  <label for="universityFilter">University:</label>
+  <select id="universityFilter"><option value="">All</option></select>
+
+  <label for="qualificationFilter">Qualification Type:</label>
+  <select id="qualificationFilter"><option value="">All</option></select>
+
+  <label for="locationFilter">Campus Location:</label>
+  <select id="locationFilter"><option value="">All</option></select>
+
+  <label for="timingFilter">Class Timings:</label>
+  <select id="timingFilter"><option value="">All</option></select>
+
+  <table id="courseTable">
+    <thead>
+      <tr>
+        <th>University Name</th>
+        <th>Qualification Type</th>
+        <th>Course Name</th>
+        <th>Campus Location</th>
+        <th>Class Timings</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const csvFile = "Tabletop - Sheet4.csv";
+
+    function populateDropdown(selectId, values) {
+      const select = document.getElementById(selectId);
+      const unique = [...new Set(values.filter(Boolean))].sort();
+      unique.forEach(v => {
+        const option = document.createElement('option');
+        option.value = v;
+        option.text = v;
+        select.appendChild(option);
+      });
+    }
+
+    function filterAndDisplay(data) {
+      const tbody = document.querySelector('#courseTable tbody');
+      tbody.innerHTML = '';
+
+      const uf = document.getElementById('universityFilter').value;
+      const qf = document.getElementById('qualificationFilter').value;
+      const lf = document.getElementById('locationFilter').value;
+      const tf = document.getElementById('timingFilter').value;
+
+      const filtered = data.filter(row =>
+        (uf === '' || row['University Name'] === uf) &&
+        (qf === '' || row['Qualification Type'] === qf) &&
+        (lf === '' || row['Campus Location'] === lf) &&
+        (tf === '' || row['Class Timings'] === tf)
+      );
+
+      filtered.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row['University Name']}</td>
+          <td>${row['Qualification Type']}</td>
+          <td>${row['Course Name']}</td>
+          <td>${row['Campus Location']}</td>
+          <td>${row['Class Timings']}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function init() {
+      Papa.parse(csvFile, {
+        header: true,
+        download: true,
+        complete: function(results) {
+          const data = results.data.filter(row => row['University Name']); // remove blanks
+
+          populateDropdown('universityFilter', data.map(r => r['University Name']));
+          populateDropdown('qualificationFilter', data.map(r => r['Qualification Type']));
+          populateDropdown('locationFilter', data.map(r => r['Campus Location']));
+          populateDropdown('timingFilter', data.map(r => r['Class Timings']));
+
+          ['universityFilter', 'qualificationFilter', 'locationFilter', 'timingFilter'].forEach(id => {
+            document.getElementById(id).addEventListener('change', () => filterAndDisplay(data));
+          });
+
+          filterAndDisplay(data);
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
