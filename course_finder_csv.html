@@ -5,29 +5,45 @@
   <title>Course Finder (CSV)</title>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f7f7f7;
-    }
-    select, table {
-      margin: 10px 0;
-      font-size: 16px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      background: white;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background: #e3e3e3;
-    }
-  </style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f7f7f7;
+  }
+  label {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  select {
+    margin: 10px;
+    font-size: 16px;
+    padding: 5px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  th {
+    background-color: #e0dfdf;
+    padding: 12px 10px;
+    font-size: 16px;
+    text-align: left;
+    border-bottom: 2px solid #d3d3d3;
+  }
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+  }
+  tr:hover {
+    background-color: #f0f0f0;
+  }
+</style>
+
 </head>
 <body>
   <h2>Course Finder (CSV Version)</h2>
