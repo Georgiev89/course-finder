@@ -110,19 +110,27 @@
   </style>
 </head>
 <body>
-  <h2>Course Finder (CSV Version)</h2>
+  <h2>Course Finder</h2>
 
-  <label for="universityFilter">University:</label>
-  <select id="universityFilter"><option value="">All</option></select>
+ <div class="filters">
+  <div>
+    <label for="universityFilter">University:</label><br>
+    <select id="universityFilter"><option value="">All</option></select>
+  </div>
+  <div>
+    <label for="qualificationFilter">Qualification Type:</label><br>
+    <select id="qualificationFilter"><option value="">All</option></select>
+  </div>
+  <div>
+    <label for="locationFilter">Campus Location:</label><br>
+    <select id="locationFilter"><option value="">All</option></select>
+  </div>
+  <div>
+    <label for="timingFilter">Class Timings:</label><br>
+    <select id="timingFilter"><option value="">All</option></select>
+  </div>
+</div>
 
-  <label for="qualificationFilter">Qualification Type:</label>
-  <select id="qualificationFilter"><option value="">All</option></select>
-
-  <label for="locationFilter">Campus Location:</label>
-  <select id="locationFilter"><option value="">All</option></select>
-
-  <label for="timingFilter">Class Timings:</label>
-  <select id="timingFilter"><option value="">All</option></select>
 
   <table id="courseTable">
     <thead>
